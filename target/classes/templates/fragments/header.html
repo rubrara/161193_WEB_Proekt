@@ -1,0 +1,118 @@
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand ml-5" href="/">ART SHOP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+                <ul class="navbar-nav m-auto">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:each="cat: ${categories}" th:text="${cat.name}"
+                                   th:href="@{'/category/{id}' (id=${cat.getId()})}">[catName]]</a>
+                            </li>
+                        </ul>
+                    <li/>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Artists
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:each="author: ${authors}" th:text="${author.name}"
+                                   th:href="@{'/artist/{id}' (id=${author.getId()})}">[authorName]]</a>
+                            </li>
+                        </ul>
+                    <li/>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Materials
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:each="mat: ${materials}" th:text="${mat.name}"
+                                   th:href="@{'/material/{id}' (id=${mat.getId()})}">[matName]]</a>
+                            </li>
+                        </ul>
+                    <li/>
+
+                    <li class="nav-item ml-1" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" style="color: red" href="/admin/categories" id="catAdmin" role="button" aria-expanded="false">
+                            Categories
+                        </a>
+                    </li>
+
+                    <li class="nav-item ml-1" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" style="color: red" href="/admin/materials" id="matAdmin" role="button" aria-expanded="false">
+                            Materials
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+                <!--                <form class="form-inline my-2 my-lg-0">-->
+                <!--                    <div class="input-group input-group-sm">-->
+                <!--                        <input type="text" class="form-control" aria-label="Small"-->
+                <!--                               aria-describedby="inputGroup-sizing-sm" placeholder="Search...">-->
+                <!--                        <div class="input-group-append">-->
+                <!--                            <button type="button" class="btn btn-secondary btn-number">-->
+                <!--                                <i class="fa fa-search"></i>-->
+                <!--                            </button>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </form>-->
+                <ul class="nav navbar-nav navbar-right">
+
+
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="#">
+                            <th:block th:if="${#request.getRemoteUser() != null}"
+                                      th:text="${#request.getRemoteUser()}"></th:block>
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="btn btn-success btn-sm ml-3 mr-3" href="/shopping-cart">
+                            <i class="fa fa-shopping-cart"></i> Cart
+                        </a>
+                    </li>
+                    <li class="nav-item ml-1" sec:authorize="isAuthenticated()">
+                        <a class="btn btn-light btn-sm ml-3" href="/logout">
+                            <i class="fa fa-shopping-cart"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-light btn-sm ml-3" href="/login">
+                            <i class="fa fa-shopping-cart"></i> Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                        <a class="btn btn-dark btn-sm ml-3" href="/register/authorReg">
+                            <i class="fa fa-shopping-cart"></i> Become Author
+                        </a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_AUTHOR', 'ROLE_ADMIN')">
+                        <a class="btn btn-dark btn-sm ml-3" href="/addArt">
+                            <i class="fa fa-shopping-cart"></i> Add Art
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

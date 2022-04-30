@@ -1,0 +1,51 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+
+
+    <hr>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h3 class="jumbotron-heading">
+                <th:block th:if="${category} != null" th:text="${category.name}"></th:block>
+                <th:block th:if="${material} != null" th:text="${material.name}"></th:block>
+                <th:block th:if="${author} != null" th:text="${author.name}"></th:block>
+            </h3>
+        </div>
+    </section>
+    <hr>
+
+    <div class="container-fluid ml-3 d-flex justify-content-center text-center">
+        <div class="row">
+            <div class="col col-md-3 col-sm-6 col-xsm-12" th:each="prod: ${products}">
+                <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+
+                    <img th:src="*{'data:image/jpeg;base64,'+{prod.image}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${prod.name}">[Name]</h5>
+                        <p class="card-text" th:text="${prod.price}">[price]</p>
+                        <p class="card-text" th:text="${prod.description}">[Description]</p>
+
+                        <form th:action="@{'/product/{id}' (id=${prod.id})}"
+                              th:method="GET"
+                              sec:authorize="isAuthenticated()">
+                            <button type="submit"
+                                    class="btn btn-sm btn-secondary">
+                                <i class="fa fa-trash">See info</i>
+                            </button>
+                        </form>
+
+                        <form th:action="@{'/shopping-cart/add-product/{id}' (id=${prod.getId()})}"
+                              th:method="POST"
+                              sec:authorize="isAuthenticated()">
+                            <button type="submit"
+                                    class="btn btn-sm btn-primary cart-product">
+                                <i class="fa fa-trash">Add to cart</i>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

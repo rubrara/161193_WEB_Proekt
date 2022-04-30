@@ -1,0 +1,51 @@
+<br>
+<div class="container" xmlns:th="http://www.thymeleaf.org">
+<form method="POST" action="/addArt" enctype="multipart/form-data">
+    <input id="id" type="hidden" name="id" th:value="(${product} != null ? ${product.getId()} : '')">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" th:value="(${product} != null ? ${product.getName()} : '')" placeholder="Enter product name">
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="text" class="form-control" id="price" name="price" th:value="(${product} != null ? ${product.getPrice()} : '')" placeholder="Enter product price">
+    </div>
+    <div class="mb-3">
+        <label for="desc" class="form-label">Description</label>
+        <input type="text" class="form-control" id="desc" name="desc" th:value="(${product} != null ? ${product.getDescription()} : '')" placeholder="Enter product description">
+    </div>
+
+    <div class="mb-3">
+        <label>Category</label>
+        <select name="category" class="form-control">
+            <option th:each="cat: ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Material</label>
+        <select name="material" class="form-control">
+            <option th:each="mat: ${materials}" th:value="${mat.id}" th:text="${mat.name}"></option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" class="form-control" id="image" accept="image/*" name="image" onchange="loadFile(event)">
+
+        <img id="output"/>
+        <script>
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src)
+                }
+            };
+        </script>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>

@@ -1,0 +1,48 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+
+    <hr>
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h3 class="jumbotron-heading">Product info for
+                <th:block th:text="${prod.name}"></th:block>
+            </h3>
+        </div>
+    </section>
+
+    <hr>
+
+    <div th:if="${hasError}">
+        <h5 class="text-center text-danger" th:text="${error}"></h5>
+    </div>
+
+    <div class="container mb-4">
+
+
+        <ul>
+            <li>
+                Name - <h5 th:text="${prod.name}"/>
+            </li>
+            <li>
+                Description - <h5 th:text="${prod.description}"/>
+            </li>
+            <li>
+                Category - <h5 th:text="${prod.category.name}"/>
+            </li>
+            <li>
+                Material - <h5 th:text="${prod.material.name}"/>
+            </li>
+            <li>
+                Artist - <h5 th:text="${prod.author.name}"/>
+            </li>
+            <li>
+                Price - <h5 th:text="${prod.price}"/>
+            </li>
+            <li>
+                Photo - <img th:src="*{'data:image/jpeg;base64,'+{prod.image}}" class="card-img-top" alt="...">
+            </li>
+        </ul>
+
+
+    </div>
+</th:block>
